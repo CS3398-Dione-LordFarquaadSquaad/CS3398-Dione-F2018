@@ -9,10 +9,10 @@ public class Nonogram {
   private String widthStr;
 
   public Nonogram() {
-    this.len = 0;
-    this.wid = 0;
-    this.lengthStr = "";
-    this.widthStr = "";
+    len = 3;
+    wid = 3;
+    lengthStr = "3";
+    widthStr = "3";
   }
   
   // setters

@@ -9,6 +9,9 @@
 
 package nonogram;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 import java.awt.*; // basic awt classes
 import java.awt.event.*; // event classes (needed for ActionListener)
 import javax.swing.*; // imports swing GUI libraries
@@ -16,7 +19,8 @@ import javax.swing.*; // imports swing GUI libraries
 public class NonogramMain {
 
   public static Nonogram nonogram;
-  public NonogramMain() {
+  
+  public NonogramMain() throws IOException {
     nonogram = new Nonogram();
   }
   
@@ -29,7 +33,10 @@ public class NonogramMain {
     }
   }
   
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
+    
+    NonogramMain blah = new NonogramMain();
+    
     System.out.println("Starting...");
     
     // create main frame
@@ -45,6 +52,9 @@ public class NonogramMain {
     solveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         JOptionPane.showMessageDialog(frame1, "Not yet implemented :(");
+        
+        
+        
       }
     });
     
@@ -67,26 +77,33 @@ public class NonogramMain {
         // create settings frame
         JFrame frameSettings = new JFrame("Settings");
         
+        JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
+
         // create settings buttons and extra text fields
         JButton defaultGridButton = new JButton("Default Grid Size");
         defaultGridButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
-            int le = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Length:", ""));
-            int wi = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Width:", ""));
-            nonogram.setLength(le);
-            nonogram.setWidth(wi);
-            JOptionPane.showMessageDialog(frameSettings, "The Default Grid size was updated.");
+            try {
+              int le = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Length:", ""));
+              int wi = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Width:", ""));
+              nonogram.setLength(le);
+              nonogram.setWidth(wi);
+              JOptionPane.showMessageDialog(frameSettings, "The Default Grid size was updated.");
+              defaultGrid.setText("The default grid size is " + le + " x " + wi + ".");
+            }
+            catch (Exception e) {
+              JOptionPane.showMessageDialog(frameSettings, "Invalid input entered. Cancelled.");
+            }
           }
         });
         
-        JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
         
         // add buttons and fields, show settings frame
         frameSettings.setLayout(null); // absolute layout
         frameSettings.add(defaultGridButton);
         defaultGridButton.setBounds(192,10,400,75); // x, y, l, w
         frameSettings.add(defaultGrid);
-        
+        defaultGrid.setBounds(192,90,400,25);
         
         frameSettings.setSize(800, 600);
         frameSettings.setVisible(true);
@@ -105,8 +122,6 @@ public class NonogramMain {
     frame1.setSize(800, 600); // intention: make the webapp 800x600
                               // makes it visible on most monitors
     frame1.setVisible(true); // makes frame1 visible on startup
-    
-    System.out.println("Closing...");
   }
   
 }
