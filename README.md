@@ -1,2 +1,11 @@
 # CS3398-Dione-F2018
-this is a test readme file I made manually on my computer. feel free to add anything of any value. maybe we might use this for useful stuff but idk
+# Branch: Ryan-InProgress
+
+To-Do for this version of the code:
+- "Solve" screen
+  - Draw the grid
+  - Have nonogram.java store details about the nonogram being used such as:
+    - length
+    - width
+    - parameters
+    - numbers per each row/column
