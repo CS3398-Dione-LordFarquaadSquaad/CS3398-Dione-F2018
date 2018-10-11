@@ -60,6 +60,7 @@ public class Runner {
         DrawNonogram grid = new DrawNonogram();
         grid.length = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Length:", nonogram.getLength()));
         grid.width = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Width:", nonogram.getWidth()));
+        grid.color = nonogram.getColor();
         
         frameSolve.add(grid);
         frameSolve.setSize(800,600);
@@ -87,6 +88,7 @@ public class Runner {
         JFrame frameSettings = new JFrame("Settings");
         
         JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
+        JTextField colSel = new JTextField("Current color: " + nonogram.getColor());
 
         // create settings buttons and extra text fields
         
@@ -111,8 +113,37 @@ public class Runner {
         // change the color of the nonogram (if actually implemented)
         JButton colorButton = new JButton("Colors");
         colorButton.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(frameSettings, "Custom colors not yet implemented. :(");
+          public void actionPerformed(ActionEvent event) {          
+            //initialize color frame
+            JFrame frameColor = new JFrame("Colors");
+            
+            // string of all possible colors
+            final String [] colors = {"Black", "Dark Gray", "Gray", "Light Gray",
+                                      "Red", "Orange", "Yellow", "Green", "Blue",
+                                      "Cyan", "Magenta", "Pink"};
+            
+            // set up elements for frame            
+            JLabel instr = new JLabel("Pick a color:");
+ 
+            JComboBox color = new JComboBox(colors);
+            color.setSelectedIndex(0);
+            color.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent event) {
+                String colorSelect = (String)color.getSelectedItem();
+                nonogram.setColor(colorSelect);
+                colSel.setText("Current color: " + nonogram.getColor());
+              }
+            }); 
+            
+            // add elements, draw frame
+            frameColor.setLayout(null);
+            frameColor.add(instr);
+            instr.setBounds(105,10,200,25);
+            frameColor.add(color);
+            color.setBounds(70,40,150,25);
+            
+            frameColor.setSize(300,200);
+            frameColor.setVisible(true);
           }
         });
         
@@ -130,11 +161,13 @@ public class Runner {
         frameSettings.add(defaultGridButton); // default grid button
         defaultGridButton.setBounds(192,10,400,75); // x, y, l, w
         frameSettings.add(defaultGrid); // default grid text field
-        defaultGrid.setBounds(192,90,400,25);
+        defaultGrid.setBounds(192,85,400,25);
         frameSettings.add(colorButton); // custom color button
-        colorButton.setBounds(192,135,400,75);
+        colorButton.setBounds(192,125,400,75);
+        frameSettings.add(colSel);
+        colSel.setBounds(192,200,400,25);
         frameSettings.add(musicButton); // custom music button
-        musicButton.setBounds(192,220,400,75);
+        musicButton.setBounds(192,240,400,75);
         
         frameSettings.setSize(800, 600);
         frameSettings.setVisible(true);
