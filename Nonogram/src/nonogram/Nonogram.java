@@ -1,7 +1,12 @@
 package nonogram;
+
+import java.awt.*; // basic awt classes
+import java.awt.geom.*;
+import java.awt.event.*; // event classes (needed for ActionListener)
+import javax.swing.*; // imports swing GUI libraries
 import java.lang.*;
 
-public class Nonogram {
+public class Nonogram extends JPanel {
   // variables
   private int len;
   private int wid;

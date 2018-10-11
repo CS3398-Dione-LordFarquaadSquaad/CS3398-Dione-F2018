@@ -13,14 +13,15 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import java.awt.*; // basic awt classes
+import java.awt.geom.*;
 import java.awt.event.*; // event classes (needed for ActionListener)
 import javax.swing.*; // imports swing GUI libraries
 
-public class NonogramMain {
-
+public class Runner {
+  
   public static Nonogram nonogram;
   
-  public NonogramMain() throws IOException {
+  public Runner() throws IOException {
     nonogram = new Nonogram();
   }
   
@@ -35,7 +36,7 @@ public class NonogramMain {
   
   public static void main(String[] args) throws Exception {
     
-    NonogramMain blah = new NonogramMain();
+    Runner blah = new Runner();
     
     System.out.println("Starting...");
     
@@ -51,10 +52,18 @@ public class NonogramMain {
     JButton solveButton = new JButton("Solve");
     solveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        JOptionPane.showMessageDialog(frame1, "Not yet implemented :(");
+        JOptionPane.showMessageDialog(frame1, "Not fully implemented, so enjoy this grid.");
         
+        JFrame frameSolve = new JFrame("Solve");
+        //JPanel grid = new DrawNonogram();
         
+        DrawNonogram grid = new DrawNonogram();
+        grid.length = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Length:", nonogram.getLength()));
+        grid.width = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Width:", nonogram.getWidth()));
         
+        frameSolve.add(grid);
+        frameSolve.setSize(800,600);
+        frameSolve.setVisible(true);
       }
     });
     
@@ -80,6 +89,8 @@ public class NonogramMain {
         JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
 
         // create settings buttons and extra text fields
+        
+        // change the default grid size upon enterning new menu
         JButton defaultGridButton = new JButton("Default Grid Size");
         defaultGridButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
@@ -97,13 +108,33 @@ public class NonogramMain {
           }
         });
         
+        // change the color of the nonogram (if actually implemented)
+        JButton colorButton = new JButton("Colors");
+        colorButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(frameSettings, "Custom colors not yet implemented. :(");
+          }
+        });
+        
+        // change the background music (or turn it off) (if actually impemented)
+        JButton musicButton = new JButton("Music");
+        musicButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(frameSettings, "Custom music not yet implemented. :(");
+          }
+        });
+        
         
         // add buttons and fields, show settings frame
         frameSettings.setLayout(null); // absolute layout
-        frameSettings.add(defaultGridButton);
+        frameSettings.add(defaultGridButton); // default grid button
         defaultGridButton.setBounds(192,10,400,75); // x, y, l, w
-        frameSettings.add(defaultGrid);
+        frameSettings.add(defaultGrid); // default grid text field
         defaultGrid.setBounds(192,90,400,25);
+        frameSettings.add(colorButton); // custom color button
+        colorButton.setBounds(192,135,400,75);
+        frameSettings.add(musicButton); // custom music button
+        musicButton.setBounds(192,220,400,75);
         
         frameSettings.setSize(800, 600);
         frameSettings.setVisible(true);
