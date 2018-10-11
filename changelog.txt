@@ -1,0 +1,13 @@
+10/11/18
+- User can now set default grid size of nonogram grid in settings
+- When prompted, user will be shown the default size
+- The user can still change the length and width at will starting in "Solve"
+- Colors have been implemented, grid changes color depending on user selection
+- Color can be changed in settings
+- Added text field to show default grid size in settings
+- Added text field to show selected color in settings
+
+10/05/18
+- Began version of UI
+- Added main menu
+- Added buttons in settings
