@@ -58,8 +58,9 @@ public class Runner {
         //JPanel grid = new DrawNonogram();
         
         DrawNonogram grid = new DrawNonogram();
-        grid.length = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Length:", nonogram.getLength()));
-        grid.width = Integer.parseInt(JOptionPane.showInputDialog("Enter the Grid Width:", nonogram.getWidth()));
+        grid.length = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
+        grid.width = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getWidth()));
+        grid.maxParam = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
         grid.color = nonogram.getColor();
         
         frameSolve.add(grid);
@@ -83,11 +84,13 @@ public class Runner {
         // variables for settings screen
         int l = nonogram.getLength();
         int w = nonogram.getWidth();
+        int p = nonogram.getMaxParam();
 
         // create settings frame
         JFrame frameSettings = new JFrame("Settings");
         
         JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
+        JTextField defaultPara = new JTextField("The default maximum number of parameters is " + p + ".");
         JTextField colSel = new JTextField("Current color: " + nonogram.getColor());
 
         // create settings buttons and extra text fields
@@ -97,16 +100,27 @@ public class Runner {
         defaultGridButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             try {
-              int le = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Length:", ""));
-              int wi = Integer.parseInt(JOptionPane.showInputDialog("Enter the Default Grid Width:", ""));
+              int le = Integer.parseInt(JOptionPane.showInputDialog("(1/2) Enter the default grid length:", ""));
+              int wi = Integer.parseInt(JOptionPane.showInputDialog("(2/2) Enter the default grid width:", ""));
               nonogram.setLength(le);
               nonogram.setWidth(wi);
-              JOptionPane.showMessageDialog(frameSettings, "The Default Grid size was updated.");
+              JOptionPane.showMessageDialog(frameSettings, "The default grid size was updated.");
               defaultGrid.setText("The default grid size is " + le + " x " + wi + ".");
             }
             catch (Exception e) {
               JOptionPane.showMessageDialog(frameSettings, "Invalid input entered. Cancelled.");
             }
+          }
+        });
+        
+        // change the default maximum parameters
+        JButton paraButton = new JButton("Max # of Parameters");
+        paraButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            int pa = Integer.parseInt(JOptionPane.showInputDialog("Enter the default maximum of parameters:", ""));
+            nonogram.setMaxParam(pa);
+            JOptionPane.showMessageDialog(frameSettings, "The defaut maximum of parameters was updated.");
+            defaultPara.setText("The default maximum number of parameters is " + pa + ".");
           }
         });
         
@@ -162,12 +176,19 @@ public class Runner {
         defaultGridButton.setBounds(192,10,400,75); // x, y, l, w
         frameSettings.add(defaultGrid); // default grid text field
         defaultGrid.setBounds(192,85,400,25);
+        
+        frameSettings.add(paraButton);
+        paraButton.setBounds(192,125,400,75);
+        frameSettings.add(defaultPara);
+        defaultPara.setBounds(192,200,400,25);
+        
         frameSettings.add(colorButton); // custom color button
-        colorButton.setBounds(192,125,400,75);
+        colorButton.setBounds(192,240,400,75);
         frameSettings.add(colSel);
-        colSel.setBounds(192,200,400,25);
+        colSel.setBounds(192,315,400,25);
+        
         frameSettings.add(musicButton); // custom music button
-        musicButton.setBounds(192,240,400,75);
+        musicButton.setBounds(192,355,400,75);
         
         frameSettings.setSize(800, 600);
         frameSettings.setVisible(true);
@@ -186,6 +207,5 @@ public class Runner {
     frame1.setSize(800, 600); // intention: make the webapp 800x600
                               // makes it visible on most monitors
     frame1.setVisible(true); // makes frame1 visible on startup
-  }
-  
+  } 
 }

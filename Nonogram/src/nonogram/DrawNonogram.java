@@ -14,6 +14,7 @@ public class DrawNonogram extends JPanel {
   public int length;
   public int width;
   public String color;
+  public int maxParam;
   
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -26,6 +27,7 @@ public class DrawNonogram extends JPanel {
     try {
       int l = length;
       int w = width;
+      int p = maxParam;
       
       // x and y trackers
       int x = 80;
@@ -45,6 +47,7 @@ public class DrawNonogram extends JPanel {
         case("Magenta"): g2.setColor(Color.MAGENTA); break;
         case("Pink"): g2.setColor(Color.PINK); break;
       }
+
       //draw the grid
       for(int i = 0; i < l; i++) {
         y = 80;
@@ -54,6 +57,8 @@ public class DrawNonogram extends JPanel {
         }
         x += 22;
       }
+      
+      // create, draw, and link text fields 
     }
     
     catch (Exception e) {
