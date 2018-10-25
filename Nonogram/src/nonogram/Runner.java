@@ -55,17 +55,85 @@ public class Runner {
         JOptionPane.showMessageDialog(frame1, "Not fully implemented, so enjoy this grid.");
         
         JFrame frameSolve = new JFrame("Solve");
-        //JPanel grid = new DrawNonogram();
+        //frameSolve.setLayout(null);
+        JFrame frameTools = new JFrame("Tools");
+        // made a new frame for the solve button because
+        // 1. it opens an enitre window for the grid
+        // 2. the solve button will just cover the entire screen and it sucks
+        frameTools.setLayout(new GridLayout(0,2));
         
+        // First, gather the basic nonogram data
         DrawNonogram grid = new DrawNonogram();
-        grid.length = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
-        grid.width = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getWidth()));
-        grid.maxParam = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
-        grid.color = nonogram.getColor();
+        int l = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
+        int h = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getHeight()));
+        int p = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
         
+        // Next, draw the grid
+        grid.length = l;
+        grid.height = h;
+        grid.maxParam = p;
+        grid.color = nonogram.getColor();
         frameSolve.add(grid);
+        
+        // Next, draw the text boxes
+        JTextField[][] tpFields = new JTextField[l][p];
+        JTextField[][] spFields = new JTextField[p][h];
+        
+        // x and y pos trackers
+        int x = 80;
+        int y = 58;
+        
+        for(int i = 0; i < l; i++){
+          y = 58;
+          for(int j = 0; j < p; j++){
+            //tpFields[i][j].setText("0");
+            frameSolve.add(tpFields[i][j]);
+            tpFields[i][j].setBounds(x,y,22,22);
+            y -= 22;
+          }
+          x += 22;
+        }
+        
+        x = 58;
+        y = 80;
+        
+        for(int i = 0; i < p; i++){
+          x = 58;
+          for(int j = 0; j < h; j++){
+            //spFields[i][j].setText("0");
+            frameSolve.add(spFields[i][j]);
+            spFields[i][j].setBounds(x,y,22,22);
+            x -= 22;
+          }
+          y += 22;
+        }
+        // Next, make a solve button
+        JButton solverButton = new JButton("Solve it!");
+        solverButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(frameSolve, "No");
+            
+            // create 2D int arrays to store all parameters in
+            
+            
+            // print the parameters to a file and send to solveAlg
+            
+            
+            // take in file with the solution
+            
+            
+            // pass file to a class that will draw the solution in a new frame
+            
+            
+          }
+        });
+       
+        solverButton.setBounds(675,496,100,50); 
+        // Final frame adjustments
         frameSolve.setSize(800,600);
         frameSolve.setVisible(true);
+        frameSolve.setLayout(null);
+        frameSolve.add(solverButton);
       }
     });
     
@@ -83,13 +151,13 @@ public class Runner {
       public void actionPerformed(ActionEvent event) {
         // variables for settings screen
         int l = nonogram.getLength();
-        int w = nonogram.getWidth();
+        int h = nonogram.getHeight();
         int p = nonogram.getMaxParam();
 
         // create settings frame
         JFrame frameSettings = new JFrame("Settings");
         
-        JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + w + ".");
+        JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + h + ".");
         JTextField defaultPara = new JTextField("The default maximum number of parameters is " + p + ".");
         JTextField colSel = new JTextField("Current color: " + nonogram.getColor());
 
@@ -101,11 +169,11 @@ public class Runner {
           public void actionPerformed(ActionEvent event) {
             try {
               int le = Integer.parseInt(JOptionPane.showInputDialog("(1/2) Enter the default grid length:", ""));
-              int wi = Integer.parseInt(JOptionPane.showInputDialog("(2/2) Enter the default grid width:", ""));
+              int he = Integer.parseInt(JOptionPane.showInputDialog("(2/2) Enter the default grid width:", ""));
               nonogram.setLength(le);
-              nonogram.setWidth(wi);
+              nonogram.setHeight(he);
               JOptionPane.showMessageDialog(frameSettings, "The default grid size was updated.");
-              defaultGrid.setText("The default grid size is " + le + " x " + wi + ".");
+              defaultGrid.setText("The default grid size is " + le + " x " + he + ".");
             }
             catch (Exception e) {
               JOptionPane.showMessageDialog(frameSettings, "Invalid input entered. Cancelled.");
