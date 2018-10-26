@@ -128,6 +128,8 @@ public class Runner {
               
               outf.close();
               fout.close();
+              
+              JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in param.txt.");
             }
             catch(Exception ex) {
               JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
