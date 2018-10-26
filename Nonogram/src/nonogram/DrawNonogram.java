@@ -35,8 +35,8 @@ public class DrawNonogram extends JPanel {
       int p = maxParam;
       
       // x and y position trackers
-      int x = 80;
-      int y = 80;
+      int x = 120;
+      int y = 120;
     
       switch(color){
         case("Black"): g2.setColor(Color.BLACK); break;
@@ -55,7 +55,7 @@ public class DrawNonogram extends JPanel {
 
       //draw the grid
       for(int i = 0; i < l; i++) {
-        y = 80;
+        y = 120;
         for(int j = 0; j < h; j++) {
           g2.drawRect(x,y,22,22);
           y += 22;

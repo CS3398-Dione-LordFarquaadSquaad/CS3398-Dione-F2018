@@ -55,101 +55,106 @@ public class Runner {
         
         // First, gather the basic nonogram data
         DrawNonogram grid = new DrawNonogram();
-        int l = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
-        int h = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getHeight()));
-        int p = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
+        try {
+          int l = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
+          int h = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getHeight()));
+          int p = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
         
-        // Next, draw the grid
-        grid.length = l;
-        grid.height = h;
-        grid.maxParam = p;
-        grid.color = nonogram.getColor();
-        frameSolve.add(grid);
-        grid.setBounds(0,0,1000,1000);
+          // Next, draw the grid
+          grid.length = l;
+          grid.height = h;
+          grid.maxParam = p;
+          grid.color = nonogram.getColor();
+          frameSolve.add(grid);
+          grid.setBounds(0,0,1000,1000);
         
-        frameSolve.setLayout(null);
+          frameSolve.setLayout(null);
         
-        // Next, draw the text boxes
-        JTextField[][] tpFields = new JTextField[l][p];
-        JTextField[][] spFields = new JTextField[h][p];
+          // Next, draw the text boxes
+          JTextField[][] tpFields = new JTextField[l][p];
+          JTextField[][] spFields = new JTextField[h][p];
         
-        // x and y pos trackers
-        int x = 80;
-        int y = 58;
+          // x and y pos trackers
+          int x = 120;
+          int y = 98;
         
-        for(int i = 0; i < l; i++){
-          y = 58;
-          for(int j = 0; j < p; j++){
-            tpFields[i][j] = new JTextField("0");
-            frameSolve.add(tpFields[i][j]);
-            tpFields[i][j].setBounds(x,y,22,22);
-            y -= 22;
+          for(int i = 0; i < l; i++){
+            y = 98;
+            for(int j = 0; j < p; j++){
+              tpFields[i][j] = new JTextField("0");
+              frameSolve.add(tpFields[i][j]);
+              tpFields[i][j].setBounds(x,y,22,22);
+              y -= 22;
+            }
+            x += 22;
           }
-          x += 22;
-        }
         
-        x = 58;
-        y = 80;
+          x = 98;
+          y = 120;
         
-        for(int i = 0; i < h; i++){
-          x = 58;
-          for(int j = 0; j < p; j++){
-            spFields[i][j] = new JTextField("0");
-            frameSolve.add(spFields[i][j]);
-            spFields[i][j].setBounds(x,y,22,22);
-            x -= 22;
+          for(int i = 0; i < h; i++){
+            x = 98;
+            for(int j = 0; j < p; j++){
+              spFields[i][j] = new JTextField("0");
+              frameSolve.add(spFields[i][j]);
+              spFields[i][j].setBounds(x,y,22,22);
+              x -= 22;
+            } 
+            y += 22;
           }
-          y += 22;
-        }
          
-        // Next, make a solve button
-        JButton solverButton = new JButton("Solve!");
-        solverButton.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            // print the parameters to a file and send to solveAlg
-            try {
-              FileWriter fout = new FileWriter("param.txt", false); // true = add to file, false = rewrite file
-              BufferedWriter outf = new BufferedWriter(fout);
+          // Next, make a solve button
+          JButton solverButton = new JButton("Enter the parameters above, and then click here for the solution!");
+          solverButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+              // print the parameters to a file and send to solveAlg
+              try {
+                FileWriter fout = new FileWriter("param.txt", false); // true = add to file, false = rewrite file
+                BufferedWriter outf = new BufferedWriter(fout);
               
-              for(int i = 0; i < l; i++) {
-                for(int j = 0; j < p; j++) {
-                  outf.write(tpFields[i][j].getText() + " ");
+                for(int i = 0; i < l; i++) {
+                  for(int j = 0; j < p; j++) {
+                    outf.write(tpFields[i][j].getText() + " ");
+                  }
+                  outf.newLine();
                 }
                 outf.newLine();
-              }
-              outf.newLine();
               
-              for(int i = 0; i < h; i++) {
-                for(int j = 0; j < p; j++) {
-                  outf.write(spFields[i][j].getText() + " ");
+                for(int i = 0; i < h; i++) {
+                  for(int j = 0; j < p; j++) {
+                    outf.write(spFields[i][j].getText() + " ");
+                  }
+                  outf.newLine();
                 }
-                outf.newLine();
+              
+                outf.close();
+                fout.close();
+              
+                JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in param.txt.");
               }
-              
-              outf.close();
-              fout.close();
-              
-              JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in param.txt.");
+              catch(Exception ex) {
+                JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
+                System.exit(1);
+              }
+            
+              // take in file with the solution
+            
+            
+              // pass file to a class that will draw the solution in a new frame
+            
+             
             }
-            catch(Exception ex) {
-              JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
-            }
-            
-            // take in file with the solution
-            
-            
-            // pass file to a class that will draw the solution in a new frame
-            
-            
-          }
-        });
-        frameSolve.add(solverButton);
-        solverButton.setBounds(682,503,100,50); 
-        // Final frame adjustments
-        frameSolve.setSize(800,600);        
-        frameSolve.setVisible(true);
+          });
+          frameSolve.add(solverButton);
+          solverButton.setBounds(0,513,782,40); 
         
-        
+          // Final frame adjustments
+          frameSolve.setSize(800,600);        
+          frameSolve.setVisible(true); 
+        }
+        catch (Exception ex) {
+          JOptionPane.showMessageDialog(frame1, "Invalid input entered. Cancelled.");
+        }
       }
     });
     
@@ -167,7 +172,7 @@ public class Runner {
       public void actionPerformed(ActionEvent event) {
         // load settings from text file
         try {
-          FileReader fin = new FileReader("settings.txt");
+          FileReader fin = new FileReader("config.txt");
           BufferedReader bin = new BufferedReader(fin);
           Scanner read = new Scanner(bin);
           
@@ -189,7 +194,8 @@ public class Runner {
           fin.close();
         }
         catch(Exception ex){
-          JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open settings.txt. Terminating program.");
+          JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open config.txt. Terminating program.");
+          System.exit(1);
         }
         // variables for settings screen
         int l = nonogram.getLength();
@@ -227,10 +233,15 @@ public class Runner {
         JButton paraButton = new JButton("Max # of Parameters");
         paraButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
-            int pa = Integer.parseInt(JOptionPane.showInputDialog("Enter the default maximum of parameters:", ""));
-            nonogram.setMaxParam(pa);
-            JOptionPane.showMessageDialog(frameSettings, "The defaut maximum of parameters was updated.");
-            defaultPara.setText("The default maximum number of parameters is " + pa + ".");
+            try {
+              int pa = Integer.parseInt(JOptionPane.showInputDialog("Enter the default maximum of parameters:", ""));
+              nonogram.setMaxParam(pa);
+              JOptionPane.showMessageDialog(frameSettings, "The defaut maximum of parameters was updated.");
+              defaultPara.setText("The default maximum number of parameters is " + pa + ".");
+            }
+            catch (Exception e) {
+              JOptionPane.showMessageDialog(frameSettings, "Invalid input entered. Cancelled.");
+            }
           }
         });
         
@@ -284,7 +295,7 @@ public class Runner {
         saveButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             try {
-              FileWriter fout = new FileWriter("settings.txt", false);
+              FileWriter fout = new FileWriter("config.txt", false);
               BufferedWriter outf = new BufferedWriter(fout);
               
               outf.write(Integer.toString(nonogram.getLength())); // writes length
@@ -303,7 +314,8 @@ public class Runner {
               frameSettings.dispatchEvent(new WindowEvent(frameSettings, WindowEvent.WINDOW_CLOSING));
             }
             catch (Exception ex) {
-              
+              JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open config.txt. Terminating program.");
+              System.exit(1);
             }
           }
         });
