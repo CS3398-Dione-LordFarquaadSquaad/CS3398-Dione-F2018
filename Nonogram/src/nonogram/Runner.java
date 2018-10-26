@@ -194,8 +194,7 @@ public class Runner {
           fin.close();
         }
         catch(Exception ex){
-          JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open config.txt. Terminating program.");
-          System.exit(1);
+          JOptionPane.showMessageDialog(frame1, "Could not find config.txt. A new file will be written upon saving.");
         }
         // variables for settings screen
         int l = nonogram.getLength();
@@ -314,8 +313,7 @@ public class Runner {
               frameSettings.dispatchEvent(new WindowEvent(frameSettings, WindowEvent.WINDOW_CLOSING));
             }
             catch (Exception ex) {
-              JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open config.txt. Terminating program.");
-              System.exit(1);
+              JOptionPane.showMessageDialog(frame1, "Could not find config.txt. A new file will be written upon saving.");
             }
           }
         });
