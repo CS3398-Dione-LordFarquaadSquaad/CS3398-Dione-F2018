@@ -56,11 +56,6 @@ public class Runner {
         
         JFrame frameSolve = new JFrame("Solve");
         //frameSolve.setLayout(null);
-        JFrame frameTools = new JFrame("Tools");
-        // made a new frame for the solve button because
-        // 1. it opens an enitre window for the grid
-        // 2. the solve button will just cover the entire screen and it sucks
-        frameTools.setLayout(new GridLayout(0,2));
         
         // First, gather the basic nonogram data
         DrawNonogram grid = new DrawNonogram();
@@ -74,10 +69,13 @@ public class Runner {
         grid.maxParam = p;
         grid.color = nonogram.getColor();
         frameSolve.add(grid);
+        grid.setBounds(0,0,1000,1000);
+        
+        frameSolve.setLayout(null);
         
         // Next, draw the text boxes
         JTextField[][] tpFields = new JTextField[l][p];
-        JTextField[][] spFields = new JTextField[p][h];
+        JTextField[][] spFields = new JTextField[h][p];
         
         // x and y pos trackers
         int x = 80;
@@ -86,7 +84,7 @@ public class Runner {
         for(int i = 0; i < l; i++){
           y = 58;
           for(int j = 0; j < p; j++){
-            //tpFields[i][j].setText("0");
+            tpFields[i][j] = new JTextField("0");
             frameSolve.add(tpFields[i][j]);
             tpFields[i][j].setBounds(x,y,22,22);
             y -= 22;
@@ -97,16 +95,17 @@ public class Runner {
         x = 58;
         y = 80;
         
-        for(int i = 0; i < p; i++){
+        for(int i = 0; i < h; i++){
           x = 58;
-          for(int j = 0; j < h; j++){
-            //spFields[i][j].setText("0");
+          for(int j = 0; j < p; j++){
+            spFields[i][j] = new JTextField("0");
             frameSolve.add(spFields[i][j]);
             spFields[i][j].setBounds(x,y,22,22);
             x -= 22;
           }
           y += 22;
         }
+         
         // Next, make a solve button
         JButton solverButton = new JButton("Solve it!");
         solverButton.addActionListener(new ActionListener() {
@@ -127,13 +126,13 @@ public class Runner {
             
           }
         });
-       
-        solverButton.setBounds(675,496,100,50); 
-        // Final frame adjustments
-        frameSolve.setSize(800,600);
-        frameSolve.setVisible(true);
-        frameSolve.setLayout(null);
         frameSolve.add(solverButton);
+        solverButton.setBounds(682,503,100,50); 
+        // Final frame adjustments
+        frameSolve.setSize(800,600);        
+        frameSolve.setVisible(true);
+        
+        
       }
     });
     
