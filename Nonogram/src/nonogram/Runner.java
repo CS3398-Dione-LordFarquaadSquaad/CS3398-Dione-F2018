@@ -2,6 +2,7 @@ package nonogram;
 
 import java.io.IOException;
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
@@ -158,10 +159,36 @@ public class Runner {
       }
     });
     
-    // settings (default grid, ...)
+    // settings
     JButton settingsButton = new JButton("Settings");
     settingsButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
+        // load settings from text file
+        try {
+          FileReader fin = new FileReader("settings.txt");
+          BufferedReader bin = new BufferedReader(fin);
+          Scanner read = new Scanner(bin);
+          
+          String lStr = read.next();
+          int l = Integer.parseInt(lStr);
+          String hStr = read.next();
+          int h = Integer.parseInt(hStr);
+          String pStr = read.next();
+          int p = Integer.parseInt(pStr);
+          String c = read.next();
+          
+          nonogram.setLength(l);
+          nonogram.setHeight(h);
+          nonogram.setMaxParam(p);
+          nonogram.setColor(c);
+          
+          read.close();
+          bin.close();
+          fin.close();
+        }
+        catch(Exception ex){
+          JOptionPane.showMessageDialog(frame1, "Critcal Error: Could not open settings.txt. Terminating program.");
+        }
         // variables for settings screen
         int l = nonogram.getLength();
         int h = nonogram.getHeight();
@@ -250,6 +277,34 @@ public class Runner {
           }
         });
         
+        // save settings and close settings menu
+        JButton saveButton = new JButton("Save and Close");
+        saveButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            try {
+              FileWriter fout = new FileWriter("settings.txt", false);
+              BufferedWriter outf = new BufferedWriter(fout);
+              
+              outf.write(Integer.toString(nonogram.getLength())); // writes length
+              outf.write(" ");
+              outf.write(Integer.toString(nonogram.getHeight())); // writes height
+              outf.write(" ");
+              outf.write(Integer.toString(nonogram.getMaxParam())); // writes parameter limit
+              outf.write(" ");
+              outf.write(nonogram.getColor()); // writes color
+              outf.write(" ");
+              
+              outf.close();
+              fout.close();
+              
+              JOptionPane.showMessageDialog(frameSettings, "Settings saved!");
+              frameSettings.dispatchEvent(new WindowEvent(frameSettings, WindowEvent.WINDOW_CLOSING));
+            }
+            catch (Exception ex) {
+              
+            }
+          }
+        });
         
         // add buttons and fields, show settings frame
         frameSettings.setLayout(null); // absolute layout
@@ -270,6 +325,9 @@ public class Runner {
         
         frameSettings.add(musicButton); // custom music button
         musicButton.setBounds(192,355,400,75);
+        
+        frameSettings.add(saveButton);
+        saveButton.setBounds(192,470,400,75);
         
         frameSettings.setSize(800, 600);
         frameSettings.setVisible(true);
