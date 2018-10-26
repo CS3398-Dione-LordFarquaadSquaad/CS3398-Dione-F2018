@@ -1,15 +1,10 @@
-/* TO-DO:
- * - Use GUI to implement the grid for the webapp.
- * - Develop a menu for the grid screen with tools to use for editing
- * - There will be two types of grids: Solving and Creating
- *   - Solving: The user inputs the parameters to have the webapp solve it
- *   - Creating: The user draws the nonogram and the webapp creates the parameters
- * - Maybe start with the menu first if it will be implemented.
- */
-
 package nonogram;
 
 import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
 import java.util.Scanner;
 
 import java.awt.*; // basic awt classes
@@ -107,16 +102,35 @@ public class Runner {
         }
          
         // Next, make a solve button
-        JButton solverButton = new JButton("Solve it!");
+        JButton solverButton = new JButton("Solve!");
         solverButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(frameSolve, "No");
-            
-            // create 2D int arrays to store all parameters in
-            
-            
             // print the parameters to a file and send to solveAlg
-            
+            try {
+              FileWriter fout = new FileWriter("param.txt", false); // true = add to file, false = rewrite file
+              BufferedWriter outf = new BufferedWriter(fout);
+              
+              for(int i = 0; i < l; i++) {
+                for(int j = 0; j < p; j++) {
+                  outf.write(tpFields[i][j].getText() + " ");
+                }
+                outf.newLine();
+              }
+              outf.newLine();
+              
+              for(int i = 0; i < h; i++) {
+                for(int j = 0; j < p; j++) {
+                  outf.write(spFields[i][j].getText() + " ");
+                }
+                outf.newLine();
+              }
+              
+              outf.close();
+              fout.close();
+            }
+            catch(Exception ex) {
+              JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
+            }
             
             // take in file with the solution
             

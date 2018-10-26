@@ -62,30 +62,6 @@ public class DrawNonogram extends JPanel {
         }
         x += 22;
       }
-      
-      // create 2D int arrays to capture entered parameters and print to file
-      int [][] topParams = new int[l][p]; // parameters on top
-      int [][] sideParams = new int[p][h]; // parameters on side
-      
-      for(int i = 0; i < l; i++) {
-        for(int j = 0; j < p; j++) {
-          topParams[i][j] = 0; // default parameter is 0
-        }
-      }
-      
-      for(int i = 0; i < p; i++) {
-        for(int j = 0; j < h; j++) {
-          sideParams[i][j] = 0; // default parameter is 0
-        }
-      }
-      
-      // create Solve! button that gathers parameters. The parameters will be
-      // sent to the 2D int arrays, and then printed to a file for the solving
-      // algorithm to read in
-      
-      // create a new frame that draws the completed nonogram by reading a file
-      // and drawing the correct objects as necessary
-      
     }
     
     catch (Exception e) {
