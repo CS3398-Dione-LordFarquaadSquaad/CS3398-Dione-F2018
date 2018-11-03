@@ -5,55 +5,33 @@
  */
 package menu;
 
-//import javazoom.jl.player.Player;
-import java.awt.CardLayout;
+import javax.swing.BorderFactory;
+
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.logging.Level;
 import javax.swing.JButton;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import java.util.Arrays;
+import javafx.scene.layout.Border;
 import javax.swing.*;
-import javafx.stage.Stage;
-//import Menu.Rectangle; 
-
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import static javax.swing.Spring.height;
 import javax.swing.WindowConstants;
-import javafx.scene.shape.Rectangle;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.event.ChangeEvent;
-import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
 
 /**
  *
@@ -63,27 +41,12 @@ public class Menu extends JPanel implements ActionListener{
 
     static int le;
     static int wi; 
-    
+    static boolean iSelected = false;
     static BufferedImage img;  
     static BufferedImage img2;
     static AudioStream MenuHolder;
     
-    //ImageIO.read(getClass().getResource("spookd.jpg"));
-    
-    
-    public void paint(Graphics graph2D) {
-    for (int i=0; i<le; i++) 
-        for (int k = 0; k < wi; k++){
-        int height = 80;
-        if ((i%2==0 && k%2==0) || (i%2==1 && k%2==1)) {
-            graph2D.drawImage(img, 80 + k*height, 80 + i*height, 80, 80, null); 
-        } else {
-            graph2D.drawImage(img2, 80 + k*height, 80 + i*height, 80, 80, null);
-        }
-        
-    }
-}
-    
+
     public static void main(String[] args) throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
         
         File file = new File("C://Users//Hunter//Desktop//Menu//src//menu/moses.png"); 
@@ -114,8 +77,7 @@ public class Menu extends JPanel implements ActionListener{
         AudioPlayer MGP = AudioPlayer.player;
         
         final AudioStream Menu1, Menu2, Menu3, Menu4, Menu5;
-        //AudioData MD;
-        //ContinuousAudioDataStream loop=true;
+        
         Menu1 = new AudioStream(new FileInputStream("C://Users//Hunter//Desktop//Menu//src//menu/melee.wav"));//enter the sound directory and name here
         Menu2 = new AudioStream(new FileInputStream("C://Users//Hunter//Desktop//Menu//src//menu/meee.wav"));
         Menu3 = new AudioStream(new FileInputStream("C://Users//Hunter//Desktop//Menu//src//menu/flat.wav"));
@@ -145,7 +107,7 @@ public class Menu extends JPanel implements ActionListener{
                     length = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the length of the nanogram:"));
                     if (length <= 0) 
                     {
-                      JOptionPane.showMessageDialog(frame, "Invalid price. "
+                      JOptionPane.showMessageDialog(frame, "Invalid length. "
                         + "The length cannot be smaller than 0.");
                       continue;
                     }
@@ -153,7 +115,6 @@ public class Menu extends JPanel implements ActionListener{
                 } catch (Exception e) 
                 {
                   JOptionPane.showMessageDialog(frame,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
                   continue;
                 }
                 break;
@@ -166,7 +127,7 @@ public class Menu extends JPanel implements ActionListener{
                     width = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the width of the nanogram."));
                     if (width <= 0) 
                     {
-                      JOptionPane.showMessageDialog(frame, "Invalid price. "
+                      JOptionPane.showMessageDialog(frame, "Invalid width. "
                         + "The width cannot be smaller than 0.");
                       continue;
                     }
@@ -174,7 +135,6 @@ public class Menu extends JPanel implements ActionListener{
                 } catch (Exception e) 
                 {
                   JOptionPane.showMessageDialog(frame,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
                   continue;
                 }
                 break;
@@ -195,7 +155,6 @@ public class Menu extends JPanel implements ActionListener{
                 } catch (Exception e) 
                 {
                   JOptionPane.showMessageDialog(frame,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
                   continue;
                 }
                 break;
@@ -216,19 +175,50 @@ public class Menu extends JPanel implements ActionListener{
                 } catch (Exception e) 
                 {
                   JOptionPane.showMessageDialog(frame,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
                   continue;
                 }
                 break;
               }
               
-               
               wi = width; 
               le = length;
               
-              testGrid.getContentPane().add(new Menu());
-              testGrid.setBounds(30,30,800,800); 
-              //graph2D.drawRect(170, y, 20, 50); 
+                boolean[][] Checker = new boolean[wi][le];  
+                //Arrays.fill(Checker, Boolean.FALSE);
+              for (int i=0;i<length;i++){
+                for (int k = 0; k < width; k++){
+                    JButton temp = new JButton("Test"); 
+                    temp.setForeground(Color.red);
+                    temp.setBackground(Color.blue);
+                    javax.swing.border.Border border = BorderFactory.createLineBorder(Color.RED, 1);
+                    temp.setBorder(border);
+                    temp.setOpaque(true);
+                    temp.setSize(70, 70);
+                    temp.setLocation(50 + 70*i, 50 + 70*k);
+                    
+                    temp.addMouseListener(new MouseAdapter(){
+                       public void mouseClicked(MouseEvent e){
+                           
+                           boolean tweak = true;
+                           iSelected = flip(iSelected); 
+                           
+                           if (iSelected)
+                               temp.setBackground(Color.green);
+                           else if (!iSelected)
+                            temp.setBackground(Color.red);
+                            
+                            
+                       }
+                   });
+                    
+                    
+                    testGrid.add(temp);
+            }
+              }      
+                //testGrid.getContentPane().add(new Menu());
+              //testGrid.add(setter);
+              testGrid.setLayout(null); 
+              testGrid.setBounds(30,30,500,500); 
               testGrid.setVisible(true); 
                }
  }); 
@@ -249,7 +239,6 @@ public class Menu extends JPanel implements ActionListener{
                 JButton ChangeAvatar = new JButton("Change the avatar");
                 
                 Options.setSize(600,200); 
-                //Options.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 Options.setLayout(new GridLayout(0,1));
                 Options.add(ChangeMusic);
                 Options.add(ChangeColor);
@@ -303,29 +292,9 @@ public class Menu extends JPanel implements ActionListener{
                         JLabel imageLabel5 = new JLabel(new ImageIcon(image5));
                         JLabel imageLabel6 = new JLabel(new ImageIcon(image6));
                         JLabel select = new JLabel("Select icon 1");
-                        //JScrollPane scrollPane = new JScrollPane();
+                        
                         avatar.setLayout(new FlowLayout());  
-                        //ImageIcon imageI = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-                        //ImageIcon imageI2 = new ImageIcon(new ImageIcon(image2).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-                        //ImageIcon imageI3 = new ImageIcon(new ImageIcon(image3).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-                        //ImageIcon imageI4 = new ImageIcon(new ImageIcon(image4).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-                        //ImageIcon imageI5 = new ImageIcon(new ImageIcon(image5).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-                        //ImageIcon imageI6 = new ImageIcon(new ImageIcon(image6).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
                         
-                        //JLabel I1 = new JLabel(imageI);
-                        //JLabel I2 = new JLabel(imageI2);
-                        //JLabel I3 = new JLabel(imageI3);
-                        //JLabel I4 = new JLabel(imageI4);
-                        //JLabel I5 = new JLabel(imageI5);
-                        //JLabel I6 = new JLabel(imageI6);
-                        
-                        //avatar.add(I1);
-                        //avatar.add(I2);
-                        //avatar.add(I3);
-                        //avatar.add(I4);
-                        //avatar.add(I5);
-                        //avatar.add(I6);
-                        //avatar.add(select);
                         String comboBoxItems[] = { "Butters", "Lamp", "Smoke", "Jesus", "Cat", "Surprise"};
                         JLabel l1 = new JLabel("Select texture #1: ");
                         JLabel l2 = new JLabel("Select texture #2: ");
@@ -395,5 +364,14 @@ public class Menu extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    static boolean flip(boolean flipme){
+        if (flipme)
+            flipme = false;
+        else if (!flipme)
+            flipme = true; 
+        
+       return flipme; 
     }
 }
