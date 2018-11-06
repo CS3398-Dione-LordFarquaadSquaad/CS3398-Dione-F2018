@@ -1,5 +1,5 @@
 /*
-Still having issues
+Error free - row only
 */
 
 import java.io.FileReader;
@@ -55,7 +55,7 @@ public class Algo{
             int loc; //location in currR or currC
             int[] ws = new int[maxR];
             int space; //number of spaces before currParam
-            int check;
+            int check = 999;
             boolean done = false;
             boolean notMax = true;
             boolean good;
@@ -65,22 +65,19 @@ public class Algo{
                     Grid[i][j]=1;
                 }
                 
-                loc = numC;
                 for(currParamNum = maxR-1; currParamNum >= 0; currParamNum--){
                     if(Row[i][currParamNum] != 0){
-                        Lvalues[currParamNum][i] = loc - Row[i][currParamNum];
-                        loc--;
+                        Lvalues[currParamNum][i] = numC - Row[i][currParamNum];
+                        int temp = currParamNum+1;
+                        while(temp <= maxR-1){
+                            Lvalues[currParamNum][i] -= Row[i][temp++]+1;
+                        }
                     }
                     else 
-                        Lvalues[currParamNum][i] = loc;
+                        Lvalues[currParamNum][i] = 0;
                 }
             }
             
-            System.out.println(Lvalues[1][0]);
-            System.out.println(Lvalues[1][1]);
-            System.out.println(Lvalues[0][2]);
-            System.out.println(Lvalues[1][2]);
-                    
             //fill Grid
             while(!done){
                 done = true;
@@ -103,15 +100,20 @@ public class Algo{
                     //fill row
                     for(currParamNum = maxR - 1; currParamNum >= 0; currParamNum--){
                         space = 0;
-                        do{
+                        check = 999;
+                        do{ if(currRparam[currParamNum] != 0){
                             loc = 0;
                             for(int k = 0; k < currParamNum; k++){
-                                for (workingParam = currRparam[k]; workingParam>0; workingParam--){
-                                    workingR[loc] = 2;
-                                    loc++;
+                                workingParam = currRparam[k];
+                                for (; workingParam>0; workingParam--){
+                                    if(loc+workingParam <= Lvalues[k][i]){
+                                        workingR[loc] = 2;
+                                        loc++;
+                                    }
+                                    else break;
                                 }
                                 if(currRparam[k] != 0){
-                                    currR[loc] = 0;
+                                    workingR[loc] = 0;
                                     loc++;
                                 }
                             }
@@ -123,8 +125,8 @@ public class Algo{
                             check = loc+1;
                             
                             for(int k = currRparam[currParamNum]; k > 0; k--){
-                                workingR[loc] = 2;
-                                loc++;
+                                    workingR[loc] = 2;
+                                    loc++;
                             }
                             
                             if(currParamNum < maxR-1){
@@ -174,7 +176,7 @@ public class Algo{
                                 }
                             }
                             space++;
-                        }while( check <= Lvalues[currParamNum][i] && currR[currParamNum] != 0);
+                        }}while( check <= Lvalues[currParamNum][i]);
                         
                         System.out.println("Row# " + i);
                         for(loc = 0; loc < numC; loc++){    
