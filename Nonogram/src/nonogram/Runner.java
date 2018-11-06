@@ -80,7 +80,7 @@ public class Runner {
         
           for(int i = 0; i < l; i++){
             y = 98;
-            for(int j = 0; j < p; j++){
+            for(int j = p-1; j >= 0; j--){
               tpFields[i][j] = new JTextField("0");
               frameSolve.add(tpFields[i][j]);
               tpFields[i][j].setBounds(x,y,22,22);
@@ -94,7 +94,7 @@ public class Runner {
         
           for(int i = 0; i < h; i++){
             x = 98;
-            for(int j = 0; j < p; j++){
+            for(int j = p-1; j >= 0; j--){
               spFields[i][j] = new JTextField("0");
               frameSolve.add(spFields[i][j]);
               spFields[i][j].setBounds(x,y,22,22);
@@ -106,31 +106,44 @@ public class Runner {
           // Next, make a solve button
           JButton solverButton = new JButton("Enter the parameters above, and then click here for the solution!");
           solverButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
+            public void actionPerformed(ActionEvent event) {   
               // print the parameters to a file and send to solveAlg
               try {
-                FileWriter fout = new FileWriter("param.txt", false); // true = add to file, false = rewrite file
+                FileWriter fout = new FileWriter("specs.txt", false); // true = add to file, false = rewrite file
                 BufferedWriter outf = new BufferedWriter(fout);
-              
+                
+                // dimensions
+                outf.write(Integer.toString(h) + ", "); // height (numRows)
+                outf.write(Integer.toString(l) + ", "); // length (numCols)
+                outf.write(Integer.toString(p) + ", "); // maxParam (numRowMarkers)
+                outf.write(Integer.toString(p) + ", "); // maxParam (numColMarkers)
+                outf.newLine(); // new line for parameters below
+                
+                // parameters
                 for(int i = 0; i < l; i++) {
                   for(int j = 0; j < p; j++) {
-                    outf.write(tpFields[i][j].getText() + " ");
+                    if(j == p-1)
+                      outf.write(tpFields[i][j].getText() + ", ");
+                    else
+                      outf.write(tpFields[i][j].getText() + " ");         
                   }
-                  outf.newLine();
                 }
+                
                 outf.newLine();
-              
+                
                 for(int i = 0; i < h; i++) {
                   for(int j = 0; j < p; j++) {
-                    outf.write(spFields[i][j].getText() + " ");
+                    if(j == p-1)
+                      outf.write(spFields[i][j].getText() + ", ");
+                    else
+                      outf.write(spFields[i][j].getText() + " ");
                   }
-                  outf.newLine();
                 }
               
                 outf.close();
                 fout.close();
               
-                JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in param.txt.");
+                JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in specs.txt.");
               }
               catch(Exception ex) {
                 JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
