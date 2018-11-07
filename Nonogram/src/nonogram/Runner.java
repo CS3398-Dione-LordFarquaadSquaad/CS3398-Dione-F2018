@@ -115,18 +115,21 @@ public class Runner {
                 BufferedWriter outf = new BufferedWriter(fout);
                 
                 // dimensions
-                outf.write(Integer.toString(h) + ", "); // height (numRows)
-                outf.write(Integer.toString(l) + ", "); // length (numCols)
-                outf.write(Integer.toString(p) + ", "); // maxParam (numRowMarkers)
-                outf.write(Integer.toString(p) + ", "); // maxParam (numColMarkers)
-                outf.newLine(); // new line for parameters below
-                
+                outf.write(Integer.toString(h)); // height (numRows)
+                outf.newLine();
+                outf.write(Integer.toString(l)); // length (numCols)
+                outf.newLine();
+                outf.write(Integer.toString(p)); // maxParam (numRowMarkers)
+                outf.newLine();
+                outf.write(Integer.toString(p)); // maxParam (numColMarkers)
+                outf.newLine(); outf.newLine(); // new lines for parameters below
+                                
                 // parameters
                 for(int i = 0; i < l; i++) {
                   for(int j = 0; j < p; j++) {
-                    if(j == p-1)
+                    /*if(j == p-1)
                       outf.write(tpFields[i][j].getText() + ", ");
-                    else
+                    else*/
                       outf.write(tpFields[i][j].getText() + " ");         
                   }
                 }
@@ -135,9 +138,9 @@ public class Runner {
                 
                 for(int i = 0; i < h; i++) {
                   for(int j = 0; j < p; j++) {
-                    if(j == p-1)
+                    /*if(j == p-1)
                       outf.write(spFields[i][j].getText() + ", ");
-                    else
+                    else*/
                       outf.write(spFields[i][j].getText() + " ");
                   }
                 }
@@ -145,7 +148,7 @@ public class Runner {
                 outf.close();
                 fout.close();
               
-                // <TODO> Send text document with solution to solving algorithm
+                // <TODO> Call solving algorithm
                 
                 DrawSolution sol = new DrawSolution();
                 sol.length = l;
