@@ -109,6 +109,8 @@ public class Runner {
             public void actionPerformed(ActionEvent event) {   
               // print the parameters to a file and send to solveAlg
               try {
+                JFrame frameSol = new JFrame();
+                
                 FileWriter fout = new FileWriter("specs.txt", false); // true = add to file, false = rewrite file
                 BufferedWriter outf = new BufferedWriter(fout);
                 
@@ -143,7 +145,21 @@ public class Runner {
                 outf.close();
                 fout.close();
               
-                JOptionPane.showMessageDialog(frameSolve, "Still not implemented, but parameters are saved in specs.txt.");
+                // <TODO> Send text document with solution to solving algorithm
+                
+                DrawSolution sol = new DrawSolution();
+                sol.length = l;
+                sol.height = h;
+                sol.maxParam = p;
+                sol.color = nonogram.getColor();
+                
+                frameSol.add(sol);
+                sol.setBounds(0,0,1000,1000);
+                
+                frameSol.setLayout(null);
+                
+                frameSol.setSize(800,600);
+                frameSol.setVisible(true);
               }
               catch(Exception ex) {
                 JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");

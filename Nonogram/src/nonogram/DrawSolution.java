@@ -6,38 +6,41 @@ import java.awt.*; // basic awt classes
 import java.awt.geom.*;
 import java.awt.event.*; // event classes (needed for ActionListener)
 import java.awt.Color;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Scanner;
 import javax.swing.*; // imports swing GUI libraries
 import javax.swing.text.*;
 import javax.swing.event.*;
 import javax.swing.GroupLayout.*;
 
-public class DrawNonogram extends JPanel {
-  
-  // variables (made public for easy editing, this is a bad practice though)
+public class DrawSolution extends JPanel{
+  // variables
   public int length;
   public int height;
   public String color;
   public int maxParam;
   
-  
-  
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    
-    JFrame frame = new JFrame();
-    
+    JFrame frameSol = new JFrame();
     Graphics2D g2 = (Graphics2D) g;
     
-    // get length, height, and color of grid
+    // get length, height, and color of solution
     try {
+      FileReader fin = new FileReader("answer.txt");
+      BufferedReader bin = new BufferedReader(fin);
+      Scanner read = new Scanner(bin);
+      
       int l = length;
       int h = height;
       int p = maxParam;
       
-      // x and y position trackers
-      int x = 120;
-      int y = 120;
-    
+      // x and y position trackers, read int
+      int x = 80;
+      int y = 80;
+      int r = 0;
+      
       switch(color){
         case("Black"): g2.setColor(Color.BLACK); break;
         case("Dark Gray"): g2.setColor(Color.DARK_GRAY); break; 
@@ -52,22 +55,27 @@ public class DrawNonogram extends JPanel {
         case("Magenta"): g2.setColor(Color.MAGENTA); break;
         case("Pink"): g2.setColor(Color.PINK); break;
       }
-
-      // draw the grid
+      
+      // draw the solution
       for(int i = 0; i < l; i++) {
-        y = 120;
+        x = 80;
         for(int j = 0; j < h; j++) {
-          g2.drawRect(x,y,22,22);
-          y += 22;
+          // read next int. if 2, full square. else, blank square
+          r = read.nextInt();
+          if(r == 2)
+            g2.fillRect(x,y,22,22);
+          else
+            g2.drawRect(x,y,22,22);
+          x += 22;
         }
-        x += 22;
+        y += 22;
       }
+      read.close();
+      bin.close();
+      fin.close();
     }
-    
-    catch (Exception e) {
-      JOptionPane.showMessageDialog(frame, "Invalid Input. Cancelled.");
+    catch(Exception e) {
+      JOptionPane.showMessageDialog(frameSol, "Invalid Input. Cancelled.");
     }
-      
-      
   }
 }
