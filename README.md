@@ -1,17 +1,14 @@
 # CS3398-Dione-F2018
 Status of Project:
-- UI: Still in development. Hunter and Ryan are currently working on making the grid editable for the "Solve" menu.
-- Solving algorithm: Still in development. Laura and Robyn are currently working out bugs so the algorithm will function precisely.
-- Note: There have been MANY setbacks due to other courses (assignments, tests, homework, other group projects, etc.).
+- UI: The solve menu is nearly complete, and will be upon linking the menu with the solving algorithm. Create menu is also still a WIP.
+- SolveAlg: The solving algrithm is nearly complete, and will be upon printing the solution to a file.
 
 Next Steps:
-Ryan:   1. Make a cleaner version of the menus (so the menus themselves will be a little more eye-candyish).
-        2. Work with Hunter to create a grid with editable parameters in a format where the algorithm can read it.
+Ryan:   1. Finish the solve menu, specifically the solution screen upon clicking the solve button.
+        2. Resize the windows to allow for bigger grids.
 
-Hunter: 1. Work with Ryan to create a grid with editable parameters in a format where the algorithm can read it.
+Hunter: 1. Finish the create menu to allow users to create their own nonograms.
 
-Laura:  1. Finish the algorithm that will solve the nonogram and display the result.
+Laura and Robyn:  1. Finish and debug the solving algorithm.
 
-Robyn:  1. Finish the algorithm that will solve the nonogram and display the result.
-
-All:    1. Once the UI and algorithm are finished, we will come together to put the pieces together; make the UI work with the alrogithm.
+All:    1. Link all the currently seperate components into one program, then cooperate to add the remaining main features.
