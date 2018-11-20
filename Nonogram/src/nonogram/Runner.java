@@ -76,31 +76,31 @@ public class Runner {
         
           // x and y pos trackers
           int x = 120;
-          int y = 98;
+          int y = 95;
         
           for(int i = 0; i < l; i++){
-            y = 98;
+            y = 95;
             for(int j = p-1; j >= 0; j--){
               tpFields[i][j] = new JTextField("0");
               frameSolve.add(tpFields[i][j]);
-              tpFields[i][j].setBounds(x,y,22,22);
-              y -= 22;
+              tpFields[i][j].setBounds(x,y,25,25);
+              y -= 25;
             }
-            x += 22;
+            x += 25;
           }
         
-          x = 98;
+          x = 95;
           y = 120;
         
           for(int i = 0; i < h; i++){
-            x = 98;
+            x = 95;
             for(int j = p-1; j >= 0; j--){
               spFields[i][j] = new JTextField("0");
               frameSolve.add(spFields[i][j]);
-              spFields[i][j].setBounds(x,y,22,22);
-              x -= 22;
+              spFields[i][j].setBounds(x,y,25,25);
+              x -= 25;
             } 
-            y += 22;
+            y += 25;
           }
          
           // Next, make a solve button
@@ -165,8 +165,7 @@ public class Runner {
                 frameSol.setVisible(true);
               }
               catch(Exception ex) {
-                JOptionPane.showMessageDialog(frameSolve, "Critical Error: Could not open param.txt. Terminating program.");
-                System.exit(1);
+                JOptionPane.showMessageDialog(frameSolve, "specs.txt not found");
               }
             
               // take in file with the solution

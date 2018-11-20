@@ -57,10 +57,10 @@ public class DrawNonogram extends JPanel {
       for(int i = 0; i < l; i++) {
         y = 120;
         for(int j = 0; j < h; j++) {
-          g2.drawRect(x,y,22,22);
-          y += 22;
+          g2.drawRect(x,y,25,25);
+          y += 25;
         }
-        x += 22;
+        x += 25;
       }
     }
     

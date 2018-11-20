@@ -17,7 +17,7 @@ public class Nonogram extends JPanel {
     len = 5;
     hei = 5;
     color = "Black";
-    maxParam = 3;
+    maxParam = 2;
   }
   
   // setters

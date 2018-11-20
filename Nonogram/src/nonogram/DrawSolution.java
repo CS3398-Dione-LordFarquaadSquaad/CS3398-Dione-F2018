@@ -63,12 +63,12 @@ public class DrawSolution extends JPanel{
           // read next int. if 2, full square. else, blank square
           r = read.nextInt();
           if(r == 2)
-            g2.fillRect(x,y,22,22);
+            g2.fillRect(x,y,25,25);
           else
-            g2.drawRect(x,y,22,22);
-          x += 22;
+            g2.drawRect(x,y,25,25);
+          x += 25;
         }
-        y += 22;
+        y += 25;
       }
       read.close();
       bin.close();
