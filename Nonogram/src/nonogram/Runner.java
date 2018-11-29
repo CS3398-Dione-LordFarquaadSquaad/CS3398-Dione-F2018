@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
 import java.util.Scanner;
+import java.util.Hashtable;
 
 import java.awt.*; // basic awt classes
 import java.awt.geom.*;
@@ -36,13 +37,41 @@ public class Runner {
     
     System.out.println("Starting...");
     
+    // first load of settings from config file
+    try {
+      FileReader fin = new FileReader("config.txt");
+      BufferedReader bin = new BufferedReader(fin);
+      Scanner read = new Scanner(bin);
+          
+      String lStr = read.next();
+      int l = Integer.parseInt(lStr);
+      String hStr = read.next();
+      int h = Integer.parseInt(hStr);
+      String pStr = read.next();
+      int p = Integer.parseInt(pStr);
+      String c = read.next();
+      String sStr = read.next();
+      int s = Integer.parseInt(sStr);
+          
+      nonogram.setLength(l);
+      nonogram.setHeight(h);
+      nonogram.setMaxParam(p);
+      nonogram.setColor(c);
+      nonogram.setElemSize(s);
+          
+      read.close();
+      bin.close();
+      fin.close();
+    }
+    catch(Exception ex){
+      System.out.println("config.txt not found. loading default settings.");
+    }
+    
     // create main frame
     JFrame frame1 = new JFrame("Ye Olde Nonogram Nannick");
     frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     ButtonListener listen = new ButtonListener();
     //JTextField text = new JTextField("");
-    
-    // create the buttons and make them move to new screens
     
     // solve
     JButton solveButton = new JButton("Solve");
@@ -59,12 +88,14 @@ public class Runner {
           int l = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the grid length:", nonogram.getLength()));
           int h = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the grid width:", nonogram.getHeight()));
           int p = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters:", nonogram.getMaxParam()));
+          int s = nonogram.getElemSize();
         
           // Next, draw the grid
           grid.length = l;
           grid.height = h;
           grid.maxParam = p;
           grid.color = nonogram.getColor();
+          grid.elemSize = nonogram.getElemSize();
           frameSolve.add(grid);
           grid.setBounds(0,0,1000,1000);
         
@@ -83,10 +114,10 @@ public class Runner {
             for(int j = p-1; j >= 0; j--){
               tpFields[i][j] = new JTextField("0");
               frameSolve.add(tpFields[i][j]);
-              tpFields[i][j].setBounds(x,y,25,25);
-              y -= 25;
+              tpFields[i][j].setBounds(x,y,s,s);
+              y -= s;
             }
-            x += 25;
+            x += s;
           }
         
           x = 95;
@@ -97,10 +128,10 @@ public class Runner {
             for(int j = p-1; j >= 0; j--){
               spFields[i][j] = new JTextField("0");
               frameSolve.add(spFields[i][j]);
-              spFields[i][j].setBounds(x,y,25,25);
-              x -= 25;
+              spFields[i][j].setBounds(x,y,s,s);
+              x -= s;
             } 
-            y += 25;
+            y += s;
           }
          
           // Next, make a solve button
@@ -155,17 +186,18 @@ public class Runner {
                 sol.height = h;
                 sol.maxParam = p;
                 sol.color = nonogram.getColor();
+                sol.elemSize = s;
                 
                 frameSol.add(sol);
                 sol.setBounds(0,0,1000,1000);
                 
                 frameSol.setLayout(null);
                 
-                frameSol.setSize(800,600);
+                frameSol.setSize(1024,900);
                 frameSol.setVisible(true);
               }
               catch(Exception ex) {
-                JOptionPane.showMessageDialog(frameSolve, "specs.txt not found");
+                System.out.println("specs.txt not found");
               }
             
               // take in file with the solution
@@ -176,11 +208,23 @@ public class Runner {
              
             }
           });
+          
+          // help button
+          JButton solveHelpButton = new JButton("Help");
+          solveHelpButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+              JOptionPane.showMessageDialog(frameSolve, "(1/3) Enter the markers into the text fields above and click the solve button to get the solution.");
+              JOptionPane.showMessageDialog(frameSolve, "(2/3) The fastest method to enter the markers is to double click a marker and then type the number.");
+              JOptionPane.showMessageDialog(frameSolve, "(3/3) If there is a viable solution, you will be brought to a new screen with the soltuion.");
+            }
+          });
+          
           frameSolve.add(solverButton);
-          solverButton.setBounds(0,513,782,40); 
-        
+          solverButton.setBounds(0,813,806,40); 
+          frameSolve.add(solveHelpButton);
+          solveHelpButton.setBounds(811,813,195,40);
           // Final frame adjustments
-          frameSolve.setSize(800,600);        
+          frameSolve.setSize(1024,900);        
           frameSolve.setVisible(true); 
         }
         catch (Exception ex) {
@@ -214,11 +258,14 @@ public class Runner {
           String pStr = read.next();
           int p = Integer.parseInt(pStr);
           String c = read.next();
+          String sStr = read.next();
+          int s = Integer.parseInt(sStr);
           
           nonogram.setLength(l);
           nonogram.setHeight(h);
           nonogram.setMaxParam(p);
           nonogram.setColor(c);
+          nonogram.setElemSize(s);
           
           read.close();
           bin.close();
@@ -231,6 +278,7 @@ public class Runner {
         int l = nonogram.getLength();
         int h = nonogram.getHeight();
         int p = nonogram.getMaxParam();
+        int s = nonogram.getElemSize();
 
         // create settings frame
         JFrame frameSettings = new JFrame("Settings");
@@ -238,6 +286,7 @@ public class Runner {
         JTextField defaultGrid = new JTextField("The default grid size is " + l + " x " + h + ".");
         JTextField defaultPara = new JTextField("The default maximum number of parameters is " + p + ".");
         JTextField colSel = new JTextField("Current color: " + nonogram.getColor());
+        JTextField sizeField = new JTextField("The current zoom level is " + s + ".");
 
         // create settings buttons and extra text fields
         
@@ -287,9 +336,10 @@ public class Runner {
                                       "Red", "Orange", "Yellow", "Green", "Blue",
                                       "Cyan", "Magenta", "Pink"};
             
-            // set up elements for frame            
+            // JLabel for instruction       
             JLabel instr = new JLabel("Pick a color:");
- 
+            
+            // drop down menu for selection from one of many colors
             JComboBox color = new JComboBox(colors);
             color.setSelectedIndex(0);
             color.addActionListener(new ActionListener() {
@@ -298,28 +348,90 @@ public class Runner {
                 nonogram.setColor(colorSelect);
                 colSel.setText("Current color: " + nonogram.getColor());
               }
-            }); 
+            });
+            
+            // close window button
+            JButton colCloseButton = new JButton("Return to Settings");
+            colCloseButton.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent event) {
+                frameColor.dispose();
+              }
+            });
             
             // add elements, draw frame
             frameColor.setLayout(null);
             frameColor.add(instr);
-            instr.setBounds(105,10,200,25);
+            instr.setBounds(470,360,200,25);
             frameColor.add(color);
-            color.setBounds(70,40,150,25);
+            color.setBounds(432,390,150,25);
+            frameColor.add(colCloseButton);
+            colCloseButton.setBounds(432,420,150,50);
             
-            frameColor.setSize(300,200);
+            frameColor.setSize(1024,900);
             frameColor.setVisible(true);
           }
         });
         
-        // change the background music (or turn it off) (if actually impemented)
-        JButton musicButton = new JButton("Music");
-        musicButton.addActionListener(new ActionListener() {
+        // resize solve menu elements (range: 20 - 30)
+        JButton resizeButton = new JButton("Grid/Text Field Size");
+        resizeButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(frameSettings, "Custom music not yet implemented. :(");
+            JFrame frameResize = new JFrame();
+            // label with quick instructions
+            JLabel inst = new JLabel("Select your preferred size:");
+            
+            // create a slider that lets the user select between size 20 - 30
+            JSlider sizeSlide = new JSlider(20, 30);
+            
+            // slider ticks
+            sizeSlide.setMajorTickSpacing(5);
+            sizeSlide.setMinorTickSpacing(1);
+            sizeSlide.setPaintTicks(true);
+            
+            // slider labels
+            sizeSlide.setPaintLabels(true);
+            Hashtable pos = new Hashtable();
+            pos.put(20, new JLabel("20"));
+            pos.put(25, new JLabel("25"));
+            pos.put(30, new JLabel("30"));
+            sizeSlide.setLabelTable(pos);
+            
+            // close window button
+            JButton resCloseButton = new JButton("Return to Settings");
+            resCloseButton.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent event) {
+                nonogram.setElemSize(sizeSlide.getValue());
+                sizeField.setText("The current zoom level is: " + nonogram.getElemSize() + ".");
+                frameResize.dispose();
+              }
+            });
+            
+            // add elements, set up frame
+            frameResize.setLayout(null);
+            frameResize.add(inst);
+            inst.setBounds(430,360,200,25);
+            frameResize.add(sizeSlide);
+            sizeSlide.setBounds(350,390,300,100);
+            frameResize.add(resCloseButton);
+            resCloseButton.setBounds(430,490,150,50);
+            
+            frameResize.setSize(1024,900);
+            frameResize.setVisible(true);
           }
         });
-        
+
+        // help button
+        JButton settingsHelpButton = new JButton("Help");
+        settingsHelpButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(frameSettings, "(1/5) Change the length and width of the blank grid when entering a menu using Default Grid Size.");
+            JOptionPane.showMessageDialog(frameSettings, "(2/5) Depending on how many markers there are per row, you can change the amount\navailable using Max # of Parameters.");
+            JOptionPane.showMessageDialog(frameSettings, "(3/5) Try some different colors using Colors!");
+            JOptionPane.showMessageDialog(frameSettings, "(4/5) You can change the size of the grid and text fields with Grid/Text Field Size\nto make them easier to see, or to fit more on the screen at once. ");
+            JOptionPane.showMessageDialog(frameSettings, "(5/5) When done adjusting settings, choose Save and Close to go back to the main menu.");
+          }
+        });
+       
         // save settings and close settings menu
         JButton saveButton = new JButton("Save and Close");
         saveButton.addActionListener(new ActionListener() {
@@ -336,11 +448,13 @@ public class Runner {
               outf.write(" ");
               outf.write(nonogram.getColor()); // writes color
               outf.write(" ");
+              outf.write(Integer.toString(nonogram.getElemSize())); // writes size
+              outf.write(" ");
               
               outf.close();
               fout.close();
               
-              JOptionPane.showMessageDialog(frameSettings, "Settings saved!");
+              JOptionPane.showMessageDialog(frameSettings, "Settings saved!\nReturning to Main Menu");
               frameSettings.dispatchEvent(new WindowEvent(frameSettings, WindowEvent.WINDOW_CLOSING));
             }
             catch (Exception ex) {
@@ -352,41 +466,59 @@ public class Runner {
         // add buttons and fields, show settings frame
         frameSettings.setLayout(null); // absolute layout
         frameSettings.add(defaultGridButton); // default grid button
-        defaultGridButton.setBounds(192,10,400,75); // x, y, l, w
+        defaultGridButton.setBounds(58,10,400,75); // x, y, l, w
         frameSettings.add(defaultGrid); // default grid text field
-        defaultGrid.setBounds(192,85,400,25);
+        defaultGrid.setBounds(58,85,400,25);
         
-        frameSettings.add(paraButton);
-        paraButton.setBounds(192,125,400,75);
+        frameSettings.add(paraButton); // parameter max button
+        paraButton.setBounds(547,10,400,75);
         frameSettings.add(defaultPara);
-        defaultPara.setBounds(192,200,400,25);
+        defaultPara.setBounds(547,85,400,25);
         
         frameSettings.add(colorButton); // custom color button
-        colorButton.setBounds(192,240,400,75);
+        colorButton.setBounds(58,140,400,75);
         frameSettings.add(colSel);
-        colSel.setBounds(192,315,400,25);
+        colSel.setBounds(58,215,400,25);
         
-        frameSettings.add(musicButton); // custom music button
-        musicButton.setBounds(192,355,400,75);
+        frameSettings.add(resizeButton); // resize button
+        resizeButton.setBounds(547,140,400,75);
+        frameSettings.add(sizeField);
+        sizeField.setBounds(547,215,400,25);
         
         frameSettings.add(saveButton);
-        saveButton.setBounds(192,470,400,75);
+        saveButton.setBounds(302,770,400,75);
         
-        frameSettings.setSize(800, 600);
+        frameSettings.add(settingsHelpButton);
+        settingsHelpButton.setBounds(923,770,75,75);
+        
+        frameSettings.setSize(1024, 900);
         frameSettings.setVisible(true);
+      }
+    });
+    
+    // help
+    JButton helpButton = new JButton("Help");
+    helpButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event){
+        JOptionPane.showMessageDialog(frame1, "(1/4) Welcome to Ye Olde Nonogram Nannick, where you can get solutions or create your own nonograms!");
+        JOptionPane.showMessageDialog(frame1, "(2/4) In Solve, you can input the markers of a nonogram and then Ye Olde Nonogram Nannick will solve it for you.");
+        JOptionPane.showMessageDialog(frame1, "(3/4) In Create, you can create your own nonograms! Ye Olde Nonogram Nannick will print the markers when you are finished. (Assuming it can be completed, of course!)");
+        JOptionPane.showMessageDialog(frame1, "(4/4) Don't forget to click settings to personalize the application and make it more to your suiting. Keep an eye out for the help button on the other screens, too!");
       }
     });
     
     // draw the main frame 
     frame1.setLayout(null); // absolute layout for complete control
     frame1.add(solveButton);
-    solveButton.setBounds(5,5,375,325); // x pos, y pos, length, width
+    solveButton.setBounds(5,200,490,453); // x pos, y pos, length, width
     frame1.add(createButton);
-    createButton.setBounds(400,5,375,325);
+    createButton.setBounds(505,200,497,453);
     frame1.add(settingsButton);
-    settingsButton.setBounds(5,350,770,190);
+    settingsButton.setBounds(5,658,770,190);
+    frame1.add(helpButton);
+    helpButton.setBounds(781,658,221,190);
     
-    frame1.setSize(800, 600); // intention: make the webapp 800x600
+    frame1.setSize(1024, 900); // intention: make the webapp 1024x900
                               // makes it visible on most monitors
     frame1.setVisible(true); // makes frame1 visible on startup
   } 

@@ -18,6 +18,7 @@ public class DrawNonogram extends JPanel {
   public int height;
   public String color;
   public int maxParam;
+  public int elemSize;
   
   
   
@@ -33,6 +34,7 @@ public class DrawNonogram extends JPanel {
       int l = length;
       int h = height;
       int p = maxParam;
+      int s = elemSize;
       
       // x and y position trackers
       int x = 120;
@@ -57,10 +59,10 @@ public class DrawNonogram extends JPanel {
       for(int i = 0; i < l; i++) {
         y = 120;
         for(int j = 0; j < h; j++) {
-          g2.drawRect(x,y,25,25);
-          y += 25;
+          g2.drawRect(x,y,s,s);
+          y += s;
         }
-        x += 25;
+        x += s;
       }
     }
     

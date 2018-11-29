@@ -20,6 +20,7 @@ public class DrawSolution extends JPanel{
   public int height;
   public String color;
   public int maxParam;
+  public int elemSize;
   
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -35,6 +36,7 @@ public class DrawSolution extends JPanel{
       int l = length;
       int h = height;
       int p = maxParam;
+      int s = elemSize;
       
       // x and y position trackers, read int
       int x = 80;
@@ -63,19 +65,20 @@ public class DrawSolution extends JPanel{
           // read next int. if 2, full square. else, blank square
           r = read.nextInt();
           if(r == 2)
-            g2.fillRect(x,y,25,25);
+            g2.fillRect(x,y,s,s);
           else
-            g2.drawRect(x,y,25,25);
-          x += 25;
+            g2.drawRect(x,y,s,s);
+          x += s;
         }
-        y += 25;
+        y += s;
       }
       read.close();
       bin.close();
       fin.close();
     }
     catch(Exception e) {
-      JOptionPane.showMessageDialog(frameSol, "Invalid Input. Cancelled.");
+      JOptionPane.showMessageDialog(frameSol, "A fatal error has occured and the program needed to close. Sorry :(");
+      System.exit(0);
     }
   }
 }
