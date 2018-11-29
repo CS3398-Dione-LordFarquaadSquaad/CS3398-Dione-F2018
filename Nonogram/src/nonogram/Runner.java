@@ -1,6 +1,5 @@
 package nonogram;
 
-// ryan's imports
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -14,58 +13,6 @@ import java.awt.*; // basic awt classes
 import java.awt.geom.*;
 import java.awt.event.*; // event classes (needed for ActionListener)
 import javax.swing.*; // imports swing GUI libraries
-
-// hunter's imports
-//import javazoom.jl.player.Player;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import javax.swing.JButton;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javax.swing.*;
-import javafx.stage.Stage;
-//import Menu.Rectangle; 
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import static javax.swing.Spring.height;
-import javax.swing.WindowConstants;
-import javafx.scene.shape.Rectangle;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.event.ChangeEvent;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
-
 
 public class Runner {
   
@@ -130,7 +77,7 @@ public class Runner {
     JButton solveButton = new JButton("Solve");
     solveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        //JOptionPane.showMessageDialog(frame1, "Not fully implemented, so enjoy this grid.");
+        JOptionPane.showMessageDialog(frame1, "Not fully implemented, so enjoy this grid.");
         
         JFrame frameSolve = new JFrame("Solve");
         //frameSolve.setLayout(null);
@@ -290,106 +237,8 @@ public class Runner {
     JButton createButton = new JButton("Create");
     createButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        int length; 
-                int width;
-                int columnmarker;
-                int rowmarker;
-                JFrame testGrid = new JFrame();
-                
-                while(true) 
-                {
-                  try 
-                  {
-                    length = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the length of the nanogram:"));
-                    if (length <= 0) 
-                    {
-                      JOptionPane.showMessageDialog(frame1, "Invalid price. "
-                        + "The length cannot be smaller than 0.");
-                      continue;
-                    }
-                    
-                } catch (Exception e) 
-                {
-                  JOptionPane.showMessageDialog(frame1,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
-                  continue;
-                }
-                break;
-              }
-                
-                while(true) 
-                {
-                  try 
-                  {
-                    width = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the width of the nanogram."));
-                    if (width <= 0) 
-                    {
-                      JOptionPane.showMessageDialog(frame1, "Invalid price. "
-                        + "The width cannot be smaller than 0.");
-                      continue;
-                    }
-                    
-                } catch (Exception e) 
-                {
-                  JOptionPane.showMessageDialog(frame1,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
-                  continue;
-                }
-                break;
-              }
-                
-              while(true) 
-                {
-                  try 
-                  {
-                    columnmarker = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the column markers of the nanogram."));
-                    if (columnmarker <= 0) 
-                    {
-                      JOptionPane.showMessageDialog(frame1, "Invalid price. "
-                        + "The row markers cannot be smaller than 0.");
-                      continue;
-                    }
-                    
-                } catch (Exception e) 
-                {
-                  JOptionPane.showMessageDialog(frame1,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
-                  continue;
-                }
-                break;
-              }
-              
-              while(true) 
-                {
-                  try 
-                  {
-                    rowmarker = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the row markers of the nanogram."));
-                    if (columnmarker <= 0) 
-                    {
-                      JOptionPane.showMessageDialog(frame1, "Invalid price. "
-                        + "The column markers cannot be smaller than 0.");
-                      continue;
-                    }
-                    
-                } catch (Exception e) 
-                {
-                  JOptionPane.showMessageDialog(frame1,"Illegal input: Must input an integer.");
-                  //logger.log(Level.SEVERE, e.getMessage(), e);
-                  continue;
-                }
-                break;
-              }
-              
-               
-              int wi = width; 
-              int le = length;
-              
-              //testGrid.getContentPane().add(new Menu());
-              testGrid.setBounds(30,30,800,800); 
-              //graph2D.drawRect(170, y, 20, 50); 
-              testGrid.setVisible(true); 
-               }
-      
+        JOptionPane.showMessageDialog(frame1, "Coming (no where near) soon!");
+      }
     });
     
     // settings
