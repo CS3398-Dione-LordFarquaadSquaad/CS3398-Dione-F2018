@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import javafx.scene.layout.Border;
@@ -30,6 +31,7 @@ import javax.swing.WindowConstants;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import static menu.Menu.Checker;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -41,11 +43,18 @@ public class Menu extends JPanel implements ActionListener{
 
     static int le;
     static int wi; 
+    
     static boolean iSelected = false;
     static BufferedImage img;  
     static BufferedImage img2;
     static AudioStream MenuHolder;
-    
+    static final boolean[][] Checker = new boolean[100][100]; 
+    static final int[][] LMarkerSetter = new int[100][100]; 
+    static final int[][] WMarkerSetter = new int[100][100]; 
+    static final int[][] LFinalizer = new int[50][50];
+    static final int[][] WFinalizer = new int[50][50];
+    static int countMarker = 0;
+    //Arrays.fill(Checker, Boolean.FALSE);
 
     public static void main(String[] args) throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
         
@@ -183,12 +192,14 @@ public class Menu extends JPanel implements ActionListener{
               wi = width; 
               le = length;
               
-                boolean[][] Checker = new boolean[wi][le];  
+                
                 //Arrays.fill(Checker, Boolean.FALSE);
               for (int i=0;i<length;i++){
                 for (int k = 0; k < width; k++){
+                    final int ii = i;
+                    final int kk = k; 
                     JButton temp = new JButton("Test"); 
-                    temp.setForeground(Color.red);
+                    temp.setForeground(Color.black);
                     temp.setBackground(Color.blue);
                     javax.swing.border.Border border = BorderFactory.createLineBorder(Color.RED, 1);
                     temp.setBorder(border);
@@ -200,11 +211,11 @@ public class Menu extends JPanel implements ActionListener{
                        public void mouseClicked(MouseEvent e){
                            
                            boolean tweak = true;
-                           iSelected = flip(iSelected); 
+                           Checker[ii][kk] = flip(Checker[ii][kk]);
                            
-                           if (iSelected)
+                           if (Checker[ii][kk])
                                temp.setBackground(Color.green);
-                           else if (!iSelected)
+                           else if (!Checker[ii][kk])
                             temp.setBackground(Color.red);
                             
                             
@@ -219,8 +230,119 @@ public class Menu extends JPanel implements ActionListener{
               //testGrid.add(setter);
               testGrid.setLayout(null); 
               testGrid.setBounds(30,30,500,500); 
+              JButton finish = new JButton("Finalize");
+              finish.setOpaque(true);
+              finish.setLocation(25 + le*70, 55 + wi*70);
+              finish.setSize(150, 30);
+              testGrid.add(finish); 
               testGrid.setVisible(true); 
-               }
+               
+            finish.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent event){
+                    
+                    int LMarker = 0;
+                    int WMarker = 0;
+                    
+                    for (int l = 0; l < le; l++){
+                        for (int w = 0; w < wi; w++){
+                            if (Checker[l][w] == true && w != wi-1)
+                            {
+                                countMarker++;
+                                //System.out.println(countMarker); 
+                            }
+                            else if (Checker[l][w] == true && w == wi-1)
+                                {
+                                    countMarker++; 
+                                    //System.out.println(countMarker);
+                                    WMarkerSetter[l][WMarker] = countMarker; 
+                                    countMarker = 0;
+                                    WMarker++;
+                                }
+                                else{
+                                    WMarkerSetter[l][WMarker] = countMarker; 
+                                    countMarker = 0;
+                                    WMarker++;
+                                }
+                        
+                    }      
+                }
+                    
+                    for (int w = 0; w < wi; w++){
+                        for (int l = 0; l < le; l++){
+                            if (Checker[l][w] == true && l != le-1)
+                            {
+                                countMarker++;
+                                //System.out.println(countMarker); 
+                            }
+                            else if (Checker[l][w] == true && l == le-1)
+                                {
+                                    countMarker++; 
+                                    //System.out.println(countMarker);
+                                    LMarkerSetter[LMarker][w] = countMarker; 
+                                    countMarker = 0;
+                                    LMarker++;
+                                }
+                                else{
+                                    LMarkerSetter[LMarker][w] = countMarker; 
+                                    countMarker = 0;
+                                    LMarker++;
+                                }
+                        
+                    }      
+                }
+                    
+                    WMarker = 0; 
+                    
+                    for (int l = 0; l < le; l++){
+                        for (int w = 0; w < wi; w++){
+                            //WMarker = w%2 + w/2; 
+                            //System.out.println(WMarker);
+                            //System.out.println(WMarkerSetter[l][w]);
+                            if (WMarkerSetter[l][w] != 0){
+                                WFinalizer[l][w] = WMarkerSetter[l][w];
+                            }
+                        }
+                    }
+                    
+                    for (int w = 0; w < wi; w++){
+                        for (int l = 0; l < le; l++){
+                            LMarker = l%2 + l/2; 
+                            //System.out.println(WMarker);
+                            //System.out.println(WMarkerSetter[l][w]);
+                            if (LMarkerSetter[l][w] != 0){
+                                LFinalizer[LMarker][w] = LMarkerSetter[l][w];
+                            }
+                        }
+                }
+                    
+                    
+                    for (int l = 0; l < le/2 + le%2 + 1; l++){
+                        for (int w = 0; w < wi/2 + wi%2 + 1; w++){
+                            if (LMarkerSetter[l][w] !=0)
+                            {
+                                System.out.println("Length " + l); 
+                                System.out.println("Marker: " + LMarkerSetter[l][w]);
+                            }
+                            
+                            if (WMarkerSetter[l][w] !=0)
+                            {
+                                System.out.println("Width " + w); 
+                                System.out.println("Marker: " + WMarkerSetter[l][w]);
+                            }
+                                
+                            //System.out.println(LFinalizer[l][w]);
+                        }
+                    }
+                     for (int l = 0; l < le; l++){
+                        for (int w = 0; w < wi; w++){
+                            Checker[l][w] = false;
+                        }
+                     }
+             }
+                     
+            }); 
+              
+            }
  }); 
         
         StageSelect.addActionListener(new ActionListener(){
