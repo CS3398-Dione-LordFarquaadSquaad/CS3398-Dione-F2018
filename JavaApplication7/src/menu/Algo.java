@@ -1,3 +1,5 @@
+package menu;
+
 /*
 Error free - row only
 */
@@ -7,7 +9,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Algo{
-    public static void main(String[] args){
+    public static void draw(){
         int numR;
         int numC;
         int maxR;
@@ -18,8 +20,9 @@ public class Algo{
             FileReader fin = new FileReader(filename);
             BufferedReader bin = new BufferedReader(fin);
             Scanner reader = new Scanner(bin);
-            File file = new File("out.txt");
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            //File file = new File("answer.txt");
+            //FileWriter fw = new FileWriter(file.getAbsoluteFile(), false);
+            FileWriter fw = new FileWriter("answer.txt", false);
             BufferedWriter bw = new BufferedWriter(fw);
         
         
@@ -333,7 +336,9 @@ public class Algo{
             }
         }
         catch(Exception e){
-            bw.write("error: " + e + "\n");
+            //bw.write("error: " + e + "\n");
+            System.out.println("Critital error occured, crashing...");
+            System.exit(1);
         }
         
     }

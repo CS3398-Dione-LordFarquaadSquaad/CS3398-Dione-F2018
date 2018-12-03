@@ -369,7 +369,7 @@ public class Menu extends JPanel implements ActionListener{
         
         // First, gather the basic nonogram data
         DrawNonogram grid = new DrawNonogram();
-        //try {
+        try {
           int l = Integer.parseInt(JOptionPane.showInputDialog("(1/3) Enter the nonogram length:")); // ex
           int h = Integer.parseInt(JOptionPane.showInputDialog("(2/3) Enter the nonogram height:")); // ex
           int p = Integer.parseInt(JOptionPane.showInputDialog("(3/3) Enter the maximum number of parameters\n(rows and columns):")); // ex
@@ -511,10 +511,10 @@ public class Menu extends JPanel implements ActionListener{
           // Final frame adjustments
           frameSolve.setSize(1024,900);        
           frameSolve.setVisible(true); 
-        /*}
+        }
         catch (Exception ex) {
           JOptionPane.showMessageDialog(frame, "Invalid input entered. Cancelled.");
-        }  */            
+        }              
             }
         });
         
