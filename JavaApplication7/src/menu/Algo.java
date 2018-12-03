@@ -18,6 +18,9 @@ public class Algo{
             FileReader fin = new FileReader(filename);
             BufferedReader bin = new BufferedReader(fin);
             Scanner reader = new Scanner(bin);
+            File file = new File("out.txt");
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
         
         
             //read file
@@ -26,7 +29,7 @@ public class Algo{
             maxR = reader.nextInt(10);
             maxC = reader.nextInt(10);
         
-            int[][] Row = new int[numC][maxR];
+            int[][] Row = new int[numR][maxR]; //hold the row parameters
             for (int i = 0; i < numR; i++){
                 for (int j = 0; j < maxR; j++){
                     //read num for next point
@@ -34,7 +37,7 @@ public class Algo{
                 }
             }
         
-            int[][] Column = new int[numR][maxC];
+            int[][] Column = new int[numC][maxC]; //hold the column parameters
             for (int i = 0; i < numC; i++){
                 for (int j = 0; j < maxC; j++){
                     //read num for next point
@@ -63,15 +66,16 @@ public class Algo{
             boolean notMax = true;
             boolean good;
         
+            //initializes Grid array to all 1s (undetermined value)
             for (int i = 0; i < numC; i++){
-                for (int j= 0; j<numR; j++){
+                for (int j= 0; j < numR; j++){
                     Grid[i][j]=1;
                 }
             
-                
+                //update Lvalues array for the rows parameters
                 for(currParamNum = maxR-1; currParamNum >= 0; currParamNum--){
                     if(Row[i][currParamNum] != 0){
-                        Lvalues[currParamNum][i] = numC - Row[i][currParamNum];
+                        Lvalues[currParamNum][i] = numC - Row[i][currParamNum]; 
                         int temp = currParamNum+1;
                         while(temp <= maxR-1){
                             Lvalues[currParamNum][i] -= Row[i][temp++]+1;
@@ -81,7 +85,7 @@ public class Algo{
                         Lvalues[currParamNum][i] = 0;
                 }
             
-            
+            	//update Dvalues array for the columns parameters
                 for(currParamNum = maxC-1; currParamNum >= 0; currParamNum--){
                     if(Column[i][currParamNum] != 0){
                         Dvalues[currParamNum][i] = numR - Column[i][currParamNum];
@@ -118,7 +122,8 @@ public class Algo{
                     for(currParamNum = maxR - 1; currParamNum >= 0; currParamNum--){
                         space = 0;
                         check = 999;
-                        do{ if(currRparam[currParamNum] != 0){
+                        do{ 
+                        	if(currRparam[currParamNum] != 0){
                             loc = 0;
                             for(int k = 0; k < currParamNum; k++){
                                 workingParam = currRparam[k];
@@ -193,7 +198,8 @@ public class Algo{
                                 }
                             }
                             space++;
-                        }}while( check <= Lvalues[currParamNum][i]);
+                        }
+                        }while( check <= Lvalues[currParamNum][i]);
                         
                         //System.out.println("Row# " + i);
                         for(loc = 0; loc < numC; loc++){    
@@ -321,13 +327,13 @@ public class Algo{
             }
             for(int c = 0; c < numC; c++){
                 for(int r = 0; r < numR; r++){
-                    System.out.print(Grid[c][r]);
+                    bw.write(Grid[c][r]);
                 }
-                System.out.println("");
+                bw.write("\n");
             }
         }
         catch(Exception e){
-            System.out.println("error: " + e);
+            bw.write("error: " + e + "\n");
         }
         
     }
