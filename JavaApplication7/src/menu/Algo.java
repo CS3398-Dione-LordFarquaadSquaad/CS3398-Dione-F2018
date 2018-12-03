@@ -1,4 +1,3 @@
-package menu;
 /*
 Error free - row only
 */
@@ -8,7 +7,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Algo{
-    public static void draw(){
+    public static void main(String[] args){
         int numR;
         int numC;
         int maxR;
