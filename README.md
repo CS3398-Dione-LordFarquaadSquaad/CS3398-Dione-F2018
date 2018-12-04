@@ -1,7 +1,7 @@
 Project Status:
   Hunter's and Ryan's menus were merged successfully into one complete menu. DrawSolution (Ryan) to Algo (Laura and Robyn) integration is still not running as intended.
 
-Next Steps:
+Next Steps (if there were to be a Sprint 4, this is what we would've done):
 - Ryan: Make the menu look nicer and get DrawSolution working with Algo.
 - Robyn:
 - Laura:
