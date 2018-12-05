@@ -425,7 +425,7 @@ public class Menu extends JPanel implements ActionListener{
             public void actionPerformed(ActionEvent event) {   
               // print the parameters to a file and send to solveAlg
               try {
-                JFrame frameSol = new JFrame("Solution (click X button to go back)");
+                JFrame frameSol = new JFrame("Solution (click X to go back)");
                 
                 FileWriter fout = new FileWriter("specs.txt", false); // true = add to file, false = rewrite file
                 BufferedWriter outf = new BufferedWriter(fout);
@@ -465,6 +465,7 @@ public class Menu extends JPanel implements ActionListener{
                 fout.close();
               
                 // <TODO> Call solving algorithm
+                Algo.draw();
                 
                 DrawSolution sol = new DrawSolution();
                 sol.length = l;
