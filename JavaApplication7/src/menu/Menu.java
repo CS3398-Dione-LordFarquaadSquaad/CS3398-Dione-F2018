@@ -465,7 +465,7 @@ public class Menu extends JPanel implements ActionListener{
                 fout.close();
               
                 // <TODO> Call solving algorithm
-                Algo.draw();
+                //Algo.draw();
                 
                 DrawSolution sol = new DrawSolution();
                 sol.length = l;

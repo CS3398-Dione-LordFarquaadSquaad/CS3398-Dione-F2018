@@ -30,7 +30,7 @@ public class DrawSolution extends JPanel{
     // get length, height, and color of solution
     try {
       //Algo.draw(); //uncomment this when Algo is replaced with a working Algo.java
-      FileReader fin = new FileReader("answer.txt");
+      FileReader fin = new FileReader("out.txt");
       BufferedReader bin = new BufferedReader(fin);
       Scanner read = new Scanner(bin);
       
