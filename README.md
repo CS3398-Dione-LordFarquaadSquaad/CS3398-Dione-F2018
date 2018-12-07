@@ -15,3 +15,4 @@ Team Contributions/Artifacts:
 - Robyn:
 - Laura:
 - Hunter:
+  - Menu.java- Serves as the foundation of the project. Allows user to change the options of the program (colors/music/avatars), create the nonograms via input, draws the inputed parameters. 
