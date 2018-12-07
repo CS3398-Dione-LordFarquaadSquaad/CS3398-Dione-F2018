@@ -5,7 +5,7 @@ Next Steps (if there were to be a Sprint 4, this is what we would've done):
 - Ryan: Make the menu look nicer and get DrawSolution working with Algo.
 - Robyn:
 - Laura:
-- Hunter:
+- Hunter: Same with what Ryan said, perhaps target the color scheme and suitable music tracks in terms of functionality. 
 
 Team Contributions/Artifacts:
 - Ryan:
