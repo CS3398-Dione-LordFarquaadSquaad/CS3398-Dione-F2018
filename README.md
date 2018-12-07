@@ -3,7 +3,7 @@ Project Status:
 
 Next Steps (if there were to be a Sprint 4, this is what we would've done):
 - Ryan: Make the menu look nicer and get DrawSolution working with Algo.
-- Robyn:
+- Robyn: The algorithm ended Sprint 3 in an infinite loop, so the next step would be breaking down the density of the algorithm and finding the loop that is causing the problem. Continue to debug after that until it solved nonograms as desired. 
 - Laura:  Continue to try to get the algorithym to produce the correct solution
 - Hunter: Same with what Ryan said, perhaps target the color scheme and suitable music tracks in terms of functionality. 
 
