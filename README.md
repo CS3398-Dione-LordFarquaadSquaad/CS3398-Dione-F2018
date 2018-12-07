@@ -16,3 +16,5 @@ Team Contributions/Artifacts:
 - Laura:
 - Hunter:
   - Menu.java- Serves as the foundation of the project. Allows user to change the options of the program (colors/music/avatars), create the nonograms via input, draws the inputed parameters. 
+ - Various .jpg files, initially served as placeholders for the pictures but were scrapped due to the new implementation of the interactive parameters.
+ - .mp4/music files- Serve as the background music for the program. We kept it in there, however the audio wouldn't work with the HDMI cable so you couldn't hear it :]
